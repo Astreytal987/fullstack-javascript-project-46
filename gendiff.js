@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-const program = new Command();
 
-import parse from './functions/parserFunc.js'
+import parse from './functions/parserFunc.js';
+import differences from './functions/differences.js';
+
+const program = new Command();
 
 program
   .description('Compares two configuration files and shows a difference.')
@@ -10,11 +12,10 @@ program
   .option('-f, --format [type]', 'output format')
   .argument('<filepath1>')
   .argument('<filepath2>')
-  .helpOption('-h, --help','output usage information')
+  .helpOption('-h, --help', 'output usage information')
   .action((filepath1, filepath2) => {
-    const oneObj = parse(filepath1)
-    const twoObj = parse(filepath2)
-    console.log(oneObj)
-    console.log(twoObj)
+    const oneObj = parse(filepath1);
+    const twoObj = parse(filepath2);
+    console.log(differences(oneObj, twoObj));
   });
 program.parse();
