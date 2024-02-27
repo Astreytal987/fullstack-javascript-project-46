@@ -1,42 +1,52 @@
-import parse from '../functions/parserFunc.js';
-import differences from '../functions/differences.js';
-
+import gendiff from './Most.js';
 describe('gendiff', () => {
-  test('parse', () => {
-    expect(parse('file1.json')).toEqual({
-      host: 'hexlet.io',
-      timeout: 50,
-      proxy: '123.234.53.22',
-      follow: false,
-    });
-  });
 
-  test('differencesJS-JS', () => {
-    const res1 = parse('file1.json');
-    const res2 = parse('file2.json');
-    expect(differences(res1, res2)).toEqual(`{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
+test('differencesJSHard-JSHard', () => {
+  expect(gendiff('fileHard1.json', 'fileHard2.json', "stylish")).toEqual(`{
+    common: {
+      + follow: false
+        setting1: Value 1
+      - setting2: 200
+      - setting3: true
+      + setting3: null
+      + setting4: blah blah
+      + setting5: {
+            key5: value5
+        }
+        setting6: {
+            doge: {
+              - wow: 
+              + wow: so much
+            }
+            key: value
+          + ops: vops
+        }
+    }
+    group1: {
+      - baz: bas
+      + baz: bars
+        foo: bar
+      - nest: {
+            key: value
+        }
+      + nest: str
+    }
+  - group2: {
+        abc: 12345
+        deep: {
+            id: 45
+        }
+    }
+  + group3: {
+        deep: {
+            id: {
+                number: 45
+            }
+        }
+        fee: 100500
+    }
 }`);
 });
-
-test('differencesJS-YAML', () => {
-  const res1 = parse('file1.yml');
-  const res2 = parse('file2.json');
-  expect(differences(res1, res2)).toEqual(`{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 110
-  + timeout: 20
-  + verbose: true
-}`);
-});
-
 
 
 });
