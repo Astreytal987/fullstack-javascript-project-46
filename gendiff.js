@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 
-import parse from './functions/parserFunc.js';
-import differences from './functions/differences.js';
+import gendiff from './Most.js';
 
 const program = new Command();
 
@@ -14,8 +13,7 @@ program
   .argument('<filepath2>')
   .helpOption('-h, --help', 'output usage information')
   .action((filepath1, filepath2) => {
-    const oneObj = parse(filepath1);
-    const twoObj = parse(filepath2);
-    console.log(differences(oneObj, twoObj));
+    const formatName = program.opts().format
+    console.log(gendiff(filepath1, filepath2, formatName));
   });
 program.parse();
