@@ -13,7 +13,7 @@ program
   .argument('<filepath2>')
   .helpOption('-h, --help', 'output usage information')
   .action((filepath1, filepath2) => {
-    const formatName = program.opts().format
+    const formatName = program.opts().format;
     console.log(gendiff(filepath1, filepath2, formatName));
   });
 program.parse();
